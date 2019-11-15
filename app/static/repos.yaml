@@ -1,0 +1,40 @@
+---
+families:
+- name: Data Collection
+  platforms:
+  - platform: iOS
+    repo: Esri/data-collection-ios
+  - platform: ".NET"
+    repo: Esri/data-collection-dotnet
+- name: Maps App
+  platforms:
+  - platform: iOS
+    repo: Esri/maps-app-ios
+  - platform: Android
+    repo: Esri/maps-app-android
+  - platform: ".NET"
+    repo: Esri/maps-app-dotnet
+  - platform: JavaScript
+    repo: Esri/maps-app-javascript
+- name: Offline Mapbook
+  platforms:
+  - platform: iOS
+    repo: Esri/mapbook-ios
+  - platform: Android
+    repo: Esri/mapbook-android
+  - platform: ".NET"
+    repo: Esri/mapbook-wpf
+- name: Indoor Routing
+  platforms:
+  - platform: Xamarin.iOS
+    repo: Esri/indoor-routing-xamarin
+- name: Nearby Places
+  platforms:
+  - platform: Android
+    repo: Esri/nearby-android
+  - platform: JavaScript
+    repo: Esri/nearby-javascript
+- name: Dynamic Situational Awareness
+  platforms:
+  - platform: Qt
+    repo: Esri/dynamic-situational-awareness-qt
