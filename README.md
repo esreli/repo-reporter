@@ -32,6 +32,13 @@ The token must be named `GITHUB_PERSONAL_ACCESS_TOKEN`
 
 ### Install MongoDB
 
+MongoDB [official install instructions](https://treehouse.github.io/installation-guides/mac/mongo-mac.html) didn't work for me, likely because i'm running Catalina. If you're running Mojave, they might work for you.
+
+```sh
+$ brew update
+$ brew install mongodb
+```
+
 Install MongoDB on Mac Catalina using Homebrew.
 
 ```sh
