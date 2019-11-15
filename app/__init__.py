@@ -37,15 +37,14 @@ from app import crawler
 scheduler = BackgroundScheduler()
 scheduler.add_job(func=crawler.crawl, trigger="interval", hours=1)
 
+# Start crawler scheduler
+scheduler.start()
+
+# Shut down the scheduler when exiting the app
+atexit.register(lambda: scheduler.shutdown())
+
 # Start App
 if __name__ == "__main__":
     # TODO: enforce required config keys (github personal access token)
-
-    # Start crawler scheduler
-    scheduler.start()
-
-    # Shut down the scheduler when exiting the app
-    atexit.register(lambda: scheduler.shutdown())
-
     # Finally, run app
     app.run(use_reloader=False)
