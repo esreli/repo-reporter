@@ -78,3 +78,5 @@ Install dependencies to the `repo-reporter-venv` virtual environment lib.
 Start the flask server on the default port, `5000`.
 
 `$(repo-reporter-venv) flask run`
+
+Check that the http server works by typing into your browser url bar: `localhost:5000/`
