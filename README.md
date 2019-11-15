@@ -32,8 +32,10 @@ The token must be named `GITHUB_PERSONAL_ACCESS_TOKEN`
 
 Install MongoDB on Mac Catalina using Homebrew.
 
-`$ brew tap mongodb/brew`
-`$ brew install mongodb-community`
+```sh
+$ brew tap mongodb/brew
+$ brew install mongodb-community
+```
 
 ### Start Mongo Daemon
 
