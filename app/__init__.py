@@ -4,11 +4,10 @@ app = Flask(__name__)
 
 # Config
 import os
-app.config['GITHUB_PERSONAL_ACCESS_TOKEN'] = os.getenv('GITHUB_PERSONAL_ACCESS_TOKEN')
-
 from app.config import ProductionConfig, DevelopmentConfig
-
-# Specify the proper configuration
+## Github Auth
+app.config['GITHUB_PERSONAL_ACCESS_TOKEN'] = os.getenv('GITHUB_PERSONAL_ACCESS_TOKEN')
+## Env Config
 if os.getenv('FLASK_ENV') == 'production':
     app.config.from_object(ProductionConfig())
 else:
@@ -27,7 +26,6 @@ from app import routes
 # Scheduler
 import time
 import atexit
-
 from apscheduler.schedulers.background import BackgroundScheduler
 from app import crawler
 

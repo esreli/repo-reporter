@@ -1,9 +1,7 @@
 from flask import request, abort, redirect, url_for, render_template
 from app import app, crawler, static
 from app.models import Repo, Report
-
 from datetime import datetime, timedelta
-from pytablewriter import MarkdownTableWriter, HtmlTableWriter
 
 def __to_date(dateString):
     d = datetime.strptime(dateString, "%Y-%m-%d").date()
@@ -24,6 +22,7 @@ def index():
 
 @app.route('/crawl')
 def perform_crawl():
-    print("will perform crawl")
+    # Crawl first
     crawler.crawl()
+    # Then redirect with latest data
     return redirect(url_for('index'))
