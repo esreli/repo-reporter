@@ -56,13 +56,38 @@
   </head>
   <body>
     <form action="" method="get" role="form">
-      <p>Start date:</p>
-      <input type="date" name="start" min="2019-01-01" value="{{start}}">
-      <br/><br/>
-      <p>(n) days:</p>
-      <input type="text" name="days" placeholder="(n) days" value="{{days}}">
-      <button type="submit">Submit</button>
-    </form>
-    {{ writer.dumps()|safe }}
+      <table>
+        <thead>
+          <th>Start date:</th>
+          <th>End date:</th>
+          <th></th>
+        </thead>
+        <tbody>
+          <td><input type="date" name="start" value="{{report.start_formatted()}}"></td>
+          <td><input type="date" name="end" value="{{report.end_formatted()}}"></td>
+          <td><button type="submit">Submit</button></td>
+        </tbody>
+      </table>
+      </form>
+    <table>
+      <thead>
+        <th>{{report.date_range()}}</th>
+        <th>Visitors</th>
+        <th>Visitors (unique)</th>
+        <th>Clones</th>
+        <th>Clones (unique)</th>
+      </thead>
+      <tbody>
+        {% for insight in report.insights %}
+        <tr>
+          <td>{{insight.repo.full_name()}}</td>
+          <td>{{insight.view_count}}</td>
+          <td>{{insight.view_uniques}}</td>
+          <td>{{insight.clone_count}}</td>
+          <td>{{insight.clone_uniques}}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
   </body>
 </html>

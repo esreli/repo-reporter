@@ -24,9 +24,6 @@ print(" * Using database: {0}".format(db_name))
 # Routes
 from app import routes
 
-# Report Generate
-from app import generate
-
 # Scheduler
 import time
 import atexit
@@ -47,4 +44,4 @@ atexit.register(lambda: scheduler.shutdown())
 if __name__ == "__main__":
     # TODO: enforce required config keys (github personal access token)
     # Finally, run app
-    app.run(use_reloader=False)
+    app.run(use_reloader=False, debug=False)
