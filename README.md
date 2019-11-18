@@ -1,12 +1,12 @@
 # Repo Reporter
 
-## Clone
-
-First clone then `cd` to the root directory of this repo before running these commands.
-
 ## Set-up
 
 Follow these set-up instructions to start a local instance of Repo Reporter.
+
+### Clone 
+
+First clone then `cd` to the root directory of this repo before running these commands.
 
 ### Create Private Environment File
 
