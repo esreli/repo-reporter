@@ -34,7 +34,7 @@
         <tbody>
           {% for insight in report.insights %}
           <tr>
-            <th scope="row">{{insight.repo.full_name()}}</th>
+            <th scope="row">{{insight.repo.full_name()}} <a href="{{insight.repo.url()}}">(repo)</a></th>
             <td>{{insight.view_count}}</td>
             <td>{{insight.view_uniques}}</td>
             <td>{{insight.clone_count}}</td>
