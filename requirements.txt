@@ -16,7 +16,6 @@ pathvalidate==0.29.0
 PyGithub==1.44
 PyJWT==1.7.1
 pymongo==3.9.0
-pytablewriter==0.46.1
 python-dateutil==2.8.0
 python-dotenv==0.10.3
 pytz==2019.3
