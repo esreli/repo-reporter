@@ -13,6 +13,14 @@ if os.getenv('FLASK_ENV') == 'production':
 else:
     app.config.from_object(DevelopmentConfig())
 
+# Get Github Access Token from Environment
+pat = app.config['GITHUB_PERSONAL_ACCESS_TOKEN']
+assert(pat is not None), "[Crawler: Error] missing environment GITHUB_PERSONAL_ACCESS_TOKEN. Ending crawl."
+
+# Github
+from github import Github
+gh_client = Github(pat)
+
 # MongoDB
 from pymongo import MongoClient
 m = MongoClient()

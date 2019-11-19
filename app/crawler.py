@@ -1,5 +1,4 @@
-from app import app, db, static
-from github import Github
+from app import app, db, static, gh_client
 from datetime import datetime, date
 
 def crawl():
@@ -8,12 +7,6 @@ def crawl():
     timestamp = datetime(year=today.year, month=today.month, day=today.day)
 
     print("[Crawler] starting crawl {0}".format(datetime.now().strftime("%m/%d/%Y, %H:%M:%S")))
-    # Get Github Access Token from Environment
-    pat = app.config['GITHUB_PERSONAL_ACCESS_TOKEN']
-    assert(pat is not None), "[Crawler: Error] missing environment GITHUB_PERSONAL_ACCESS_TOKEN. Ending crawl."
-
-    # Build Github Client
-    g = Github(pat)
 
     # Grab static repos
     families = static.repos()["families"]
@@ -29,7 +22,7 @@ def crawl():
 
             # Repo
             platform_repo = platform["repo"]
-            repo = g.get_repo(platform_repo)
+            repo = gh_client.get_repo(platform_repo)
 
             # Views
             views = repo.get_views_traffic()
