@@ -10,11 +10,7 @@ def crawl():
     print("[Crawler] starting crawl {0}".format(datetime.now().strftime("%m/%d/%Y, %H:%M:%S")))
     # Get Github Access Token from Environment
     pat = app.config['GITHUB_PERSONAL_ACCESS_TOKEN']
-
-    if pat is None:
-        print("[Crawler: Error] missing environment GITHUB_PERSONAL_ACCESS_TOKEN")
-        print("[Crawler] ending crawl")
-        return
+    assert(pat is not None), "[Crawler: Error] missing environment GITHUB_PERSONAL_ACCESS_TOKEN. Ending crawl."
 
     # Build Github Client
     g = Github(pat)
