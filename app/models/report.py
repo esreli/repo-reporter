@@ -6,9 +6,7 @@ class Report(object):
         self.insights = []
         self.start = start
         self.end = end
-        for repo in repos:
-            insight = Insight(repo, self.start, self.end)
-            self.insights.append(insight)
+        self.insights  = [Insight(repo, self.start, self.end) for repo in repos]
 
     def __repr__(self):
         return "Report({0} Insight)".format(len(self.insights))
