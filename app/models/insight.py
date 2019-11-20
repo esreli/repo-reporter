@@ -12,7 +12,7 @@ class Insight(object):
         self.referrers = []
 
         # DB Aggregate
-        agr = [{'$match': {"repo": self.repo.repo, "timestamp": {'$gte': start, '$lt': end}}}, { '$group': {'_id': 1, 'count': { '$sum': "$count" }, 'uniques': { '$sum': "$uniques" } }}]
+        agr = [{'$match': {"repo": self.repo.repo, "timestamp": {'$gte': start, '$lte': end}}}, { '$group': {'_id': 1, 'count': { '$sum': "$count" }, 'uniques': { '$sum': "$uniques" } }}]
 
         # Views
         view = list(db.view.aggregate(agr))
