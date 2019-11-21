@@ -9,6 +9,8 @@ class Report(object):
         self.platform = platform
         self.name = name
         self.insights  = [Insight(repo, self.start, self.end) for repo in repos]
+        # TODO: Consider Build Referrers for full report
+        # https://docs.mongodb.com/manual/reference/operator/query/or/
 
     def __repr__(self):
         return "Report({0} Insight)".format(len(self.insights))
