@@ -39,3 +39,6 @@ repos:
 - name: Dynamic Situational Awareness
   platform: Qt
   repo: Esri/dynamic-situational-awareness-qt
+- name: Data Collection
+  platform: Android
+  repo: Esri/data-collection-android
