@@ -20,6 +20,42 @@
               <td><input type="date" name="end" value="{{report.end_formatted()}}" class="form-control"></td>
               <td><button type="submit" class="btn btn-primary">Submit</button></td>
             </tr>
+            <tr>
+              <td>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <label class="input-group-text">Name</label>
+                  </div>
+                  <select class="custom-select" name="name">
+                    {% for name in names %}
+                    {% if name == report.name %}
+                    <option selected name="name" value="{{name}}">{{name}}</option>
+                      {% else %}
+                    <option name="name" value="{{name}}">{{name}}</option>
+                    {% endif %}
+                    {% endfor %}
+                  </select>
+                </div>
+              </td>
+              <td>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <label class="input-group-text">Platform</label>
+                  </div>
+                  <select class="custom-select" name="platform">
+                    {% for platform in platforms %}
+                    {% if platform == report.platform %}
+                    <option selected value="{{platform}}">{{platform}}</option>
+                      {% else %}
+                    <option value="{{platform}}">{{platform}}</option>
+                    {% endif %}
+                    {% endfor %}
+                  </select>
+                </div>
+              </td>
+              <td>
+              </td>
+            </tr>
           </tbody>
         </table>
         </form>

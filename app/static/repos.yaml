@@ -28,7 +28,7 @@ repos:
   platform: ".NET"
   repo: Esri/mapbook-wpf
 - name: Indoor Routing
-  platform: Xamarin.iOS
+  platform: ".NET"
   repo: Esri/indoor-routing-xamarin
 - name: Nearby Places
   platform: Android

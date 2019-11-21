@@ -15,20 +15,23 @@ def index():
     end = request.args.get('end', default=datetime.now(), type=__to_date)
     start = request.args.get('start', default=end-timedelta(days=14), type=__to_date)
     # Gather filters
-    platform = request.args.get('platform', default="all")
-    name = request.args.get('name', default="all")
-    # Build Repo Models
+    platform = request.args.get('platform', default="All")
+    name = request.args.get('name', default="All")
+    # Build Repo models
     repos = Repo.from_yaml(static.repos())
+    # Build filters for UI
+    platforms = ["All"] + list(set([repo.platform for repo in repos]))
+    names = ["All"] + list(set([repo.family_name for repo in repos]))
     # Filter Repos by platform
-    if platform is not "all":
+    if platform != "All":
         repos = [repo for repo in repos if repo.platform == platform]
     # Filter Repos by name
-    if name is not "all":
+    if name != "All":
         repos = [repo for repo in repos if repo.family_name == name]
-    # Generate Report
-    report = Report(repos, start, end)
-
-    return render_template("report.html", report=report)
+    # Generate report
+    report = Report(repos, start, end, platform, name)
+    # Render page
+    return render_template("report.html", report=report, platforms=platforms, names=names)
 
 @app.route('/crawl')
 def perform_crawl():

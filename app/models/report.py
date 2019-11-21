@@ -2,10 +2,12 @@ from .insight import Insight
 
 class Report(object):
 
-    def __init__(self, repos, start, end):
+    def __init__(self, repos, start, end, platform, name):
         self.insights = []
         self.start = start
         self.end = end
+        self.platform = platform
+        self.name = name
         self.insights  = [Insight(repo, self.start, self.end) for repo in repos]
 
     def __repr__(self):
