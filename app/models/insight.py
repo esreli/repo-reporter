@@ -8,7 +8,7 @@ class Insight(object):
         self.paths = []
 
         # DB Aggregate
-        agr = [{'$match': {"repo": self.repo.repo, "timestamp": {'$gte': start, '$lte': end}}}, { '$group': {'_id': 1, 'count': { '$sum': "$count" }, 'uniques': { '$sum': "$uniques" } }}]
+        agr = [{'$match': {'repo': self.repo.repo, 'timestamp': {'$gte': start, '$lte': end}}}, {'$group': {'_id': 1, 'count': {'$sum': '$count'}, 'uniques': {'$sum': '$uniques'}}}]
 
         # Views
         view = list(db.view.aggregate(agr))
@@ -24,12 +24,12 @@ class Insight(object):
         # TODO
 
         # Referrers
-        agr = [{'$match': {"repo": self.repo.repo, "timestamp": {'$gte': start, '$lte': end}}}, { '$group': {'_id': "$referrer", 'count': { '$sum': "$count" }, 'uniques': { '$sum': "$uniques" }}}, { '$sort':  {'count': -1}}]
+        agr = [{'$match': {'repo': self.repo.repo, 'timestamp': {'$gte': start, '$lte': end}}}, {'$group': {'_id': '$referrer', 'count': {'$sum': '$count'}, 'uniques': {'$sum': '$uniques'}}}, {'$sort': {'count': -1}}]
         referrers = list(db.referrer.aggregate(agr))
         self.referrers = [ Referrer(ref["_id"], ref["count"], ref["uniques"]) for ref in referrers ]
 
     def __repr__(self):
-        return "Insight({0}- v: {1}, vu: {2}, c: {3}, cu: {4})".format(self.repo.repo, self.view_count, self.view_uniques, self.clone_count, self.clone_uniques)
+        return 'Insight({0}- v: {1}, vu: {2}, c: {3}, cu: {4})'.format(self.repo.repo, self.view_count, self.view_uniques, self.clone_count, self.clone_uniques)
 
     @staticmethod
     def __get_value(values, key):
