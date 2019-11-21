@@ -14,8 +14,18 @@ def index():
     # Gather start, end dates
     end = request.args.get('end', default=datetime.now(), type=__to_date)
     start = request.args.get('start', default=end-timedelta(days=14), type=__to_date)
-    # Generate Repo Models
+    # Gather filters
+    platform = request.args.get('platform', default="all")
+    name = request.args.get('name', default="all")
+    # Build Repo Models
     repos = Repo.from_yaml(static.repos())
+    # Filter Repos by platform
+    if platform is not "all":
+        repos = [repo for repo in repos if repo.platform == platform]
+    # Filter Repos by name
+    if name is not "all":
+        repos = [repo for repo in repos if repo.family_name == name]
+    # Generate Report
     report = Report(repos, start, end)
 
     return render_template("report.html", report=report)
