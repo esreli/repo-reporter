@@ -72,8 +72,8 @@
       <table class="table table-striped table-light table-hover">
         <thead class="thead-light">
           <th scope="col">{{report.date_range()}}</th>
-          <th scope="col">Visitors</th>
-          <th scope="col">Visitors (unique)</th>
+          <th scope="col">Views</th>
+          <th scope="col">Views (unique)</th>
           <th scope="col">Clones</th>
           <th scope="col">Clones (unique)</th>
         </thead>
@@ -99,6 +99,7 @@
       <hr/>
       {% for insight in report.insights %}
       <h3>{{insight.repo.full_name()}}</h3>
+        <!-- Referrer -->
       <table class="table table-striped table-light table-hover">
         <thead class="thead-light">
           <th scope="col">Referrer</th>
@@ -111,6 +112,23 @@
             <td>{{referrer.referrer}}</td>
             <td>{{referrer.count}}</td>
             <td>{{referrer.uniques}}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <!-- Path -->
+      <table class="table table-striped table-light table-hover">
+        <thead class="thead-light">
+          <th scope="col">Path</th>
+          <th scope="col">Count (normalized)</th>
+          <th scope="col">Unique (normalized)</th>
+        </thead>
+        <tbody>
+          {% for path in insight.paths %}
+          <tr>
+            <td><a href="{{path.url()}}" target="_blank">{{path.path}}</a></td>
+            <td>{{path.count}}</td>
+            <td>{{path.uniques}}</td>
           </tr>
           {% endfor %}
         </tbody>
