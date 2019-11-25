@@ -1,8 +1,11 @@
 class Repo(object):
 
     @staticmethod
-    def from_yaml(yaml_stream):
-        return [Repo(repo["name"], repo["platform"], repo["repo"]) for repo in yaml_stream["repos"]]
+    def from_yaml(yaml_stream, sorted=True):
+        repos = [Repo(repo["name"], repo["platform"], repo["repo"]) for repo in yaml_stream["repos"]]
+        if sorted:
+            repos.sort(key=lambda repo: repo.full_name())
+        return repos
 
     def __init__(self, family_name, platform, repo):
         self.family_name = family_name
