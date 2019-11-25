@@ -24,7 +24,7 @@ class Insight(object):
         self.clone_uniques = Insight.__get_value(clone, 'uniques') or 0
 
         # Referrers
-        agr = [match, {'$group': {'_id': '$referrer', 'count': {'$sum': '$count'}, 'uniques': {'$sum': '$uniques'}}}, {'$sort': {'count': -1}}]
+        agr = [match, {'$group': {'_id': '$referrer', 'count': {'$sum': '$count'}, 'uniques': {'$sum': '$uniques'}}}, {'$sort': {'count': -1}}, {'$limit': 10}]
         referrers = list(db.referrer.aggregate(agr))
         self.referrers = [ Referrer(ref["_id"], ref["count"], ref["uniques"]) for ref in referrers ]
 
