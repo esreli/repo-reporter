@@ -8,12 +8,15 @@ def __to_date(dateString):
     t = datetime.min.time()
     return datetime.combine(d, t)
 
+def __strip_time(date):
+    return datetime(date.year, date.month, date.day)
+
 @app.route('/')
 @app.route('/index')
 def index():
     # Gather start, end dates
-    end = request.args.get('end', default=datetime.now(), type=__to_date)
-    start = request.args.get('start', default=end-timedelta(days=14), type=__to_date)
+    end = request.args.get('end', default=__strip_time(datetime.now()), type=__to_date)
+    start = request.args.get('start', default=__strip_time(end-timedelta(days=14)), type=__to_date)
     # Gather filters
     platform = request.args.get('platform', default="All")
     name = request.args.get('name', default="All")
