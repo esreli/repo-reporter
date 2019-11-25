@@ -9,6 +9,10 @@ class Report(object):
         self.platform = platform
         self.name = name
         self.insights  = [Insight(repo, self.start, self.end) for repo in repos]
+        self.view_count_sum = sum(insight.view_count for insight in self.insights)
+        self.view_uniques_sum = sum(insight.view_uniques for insight in self.insights)
+        self.clone_count_sum = sum(insight.clone_count for insight in self.insights)
+        self.clone_uniques_sum = sum(insight.clone_uniques for insight in self.insights)
         # TODO: Consider Build Referrers for full report
         # https://docs.mongodb.com/manual/reference/operator/query/or/
 
