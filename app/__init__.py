@@ -1,10 +1,12 @@
 # Flask
-from flask import Flask
+from flask import Flask, session
 app = Flask(__name__)
 
 # Config
 import os
 from app.config import ProductionConfig, DevelopmentConfig
+## Secret Key
+app.secret_key = os.getenv('RR_SECRET_KEY')
 ## Github Auth
 app.config['GITHUB_PERSONAL_ACCESS_TOKEN'] = os.getenv('GITHUB_PERSONAL_ACCESS_TOKEN')
 ## Env Config

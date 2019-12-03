@@ -1,4 +1,4 @@
-from flask import request, abort, redirect, url_for, render_template
+from flask import request, abort, redirect, url_for, render_template, flash
 from app import app, crawler, static
 from app.models import Repo, Report
 from datetime import datetime, timedelta
@@ -42,6 +42,6 @@ def perform_crawl():
     try:
         crawler.crawl()
     except Exception as e:
-        print(e)
+        flash('Error crawling Github.\n{0}'.format(e))
     # Then redirect with latest data
     return redirect(url_for('index'))

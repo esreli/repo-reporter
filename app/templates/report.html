@@ -12,12 +12,27 @@
 </head>
 <body>
   <div class="container pt-2">
+    <!-- Section: Error Message -->
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <div class="row mb-4">
+      <div class="col-lg-12">
+      <div class="alert alert-danger" role="alert">
+        {% for message in messages %}
+        {{ message }} <br/>
+        {% endfor %}
+      </div>
+    </div>
+    </div>
+    {% endif %}
+    {% endwith %}
+    
     <!-- Section: Header -->
     <div class="row mb-4">
-      <div class="col-lg-8">
+      <div class="col-lg-9">
         <h1><span>Repo<span style="color:DimGray">rter</span></span></h1>
       </div>
-      <div class="col-sm-4 p-2">
+      <div class="col-sm-3 p-2">
         <a class="float-right btn btn-outline-secondary" href="./crawl">Perform Crawl</a>
       </div>
     </div>
