@@ -4,7 +4,7 @@
 
 Follow these set-up instructions to start a local instance of Repo Reporter.
 
-### Clone 
+### Clone
 
 First clone then `cd` to the root directory of this repo before running these commands.
 
@@ -26,9 +26,15 @@ Create a personal access token on GitHub following these [instructions](https://
 
 ### Store GitHub Personal Access Token in your local Environment
 
-The token must be named `GITHUB_PERSONAL_ACCESS_TOKEN`
+The token will allow you to authenticate to Github. The token must be named `GITHUB_PERSONAL_ACCESS_TOKEN`.
 
-`$ echo GITHUB_PERSONAL_ACCESS_TOKEN=your-newly-aquired-super-secret-token > .env`
+`$ echo GITHUB_PERSONAL_ACCESS_TOKEN=your-newly-aquired-super-secret-token >> .env`
+
+### Generate Secret Key in your local Environment
+
+The secret key will allow you to define a Flask session. The token must be named `RR_SECRET_KEY`.
+
+`echo "RR_SECRET_KEY=$(openssl rand -base64 32)" >> .env`
 
 ### Install MongoDB
 
