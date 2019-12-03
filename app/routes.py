@@ -39,6 +39,9 @@ def index():
 @app.route('/crawl')
 def perform_crawl():
     # Crawl first
-    crawler.crawl()
+    try:
+        crawler.crawl()
+    except Exception as e:
+        print(e)
     # Then redirect with latest data
     return redirect(url_for('index'))
