@@ -1,4 +1,18 @@
+from app import static
+from slugify import slugify
+
 class Repo(object):
+
+    @staticmethod
+    def all():
+        return Repo.from_yaml(static.repos())
+
+    @staticmethod
+    def from_slug(app_full_name):
+        for repo in Repo.all():
+            if app_full_name == repo.slugged_full_name():
+                return repo
+        return None
 
     @staticmethod
     def from_yaml(yaml_stream, sorted=True):
@@ -20,3 +34,6 @@ class Repo(object):
 
     def url(self, base="https://github.com/"):
         return "{0}{1}".format(base, self.repo)
+
+    def slugged_full_name(self):
+        return slugify(self.full_name())

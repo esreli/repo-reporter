@@ -21,7 +21,7 @@ def index():
     platform = request.args.get('platform', default="All")
     name = request.args.get('name', default="All")
     # Build Repo models
-    repos = Repo.from_yaml(static.repos())
+    repos = Repo.all()
     # Build filters for UI
     platforms = ["All"] + list(set([repo.platform for repo in repos]))
     names = ["All"] + list(set([repo.family_name for repo in repos]))
@@ -35,6 +35,11 @@ def index():
     report = Report(repos, start, end, platform, name)
     # Render page
     return render_template("report.html", report=report, platforms=platforms, names=names)
+
+@app.route('/<app_full_name>')
+def repo_report(app_full_name):
+    repo = Repo.from_slug(app_full_name)
+    return redirect(url_for('index'))
 
 @app.route('/crawl')
 def perform_crawl():
