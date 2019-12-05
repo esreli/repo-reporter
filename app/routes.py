@@ -11,6 +11,10 @@ def __to_date(dateString):
 def __strip_time(date):
     return datetime(date.year, date.month, date.day)
 
+@app.context_processor
+def inject_collection():
+    return dict(collection_name=Collection.name(), collection_accent=Collection.accent_color())
+
 @app.route('/')
 @app.route('/index')
 def index():
