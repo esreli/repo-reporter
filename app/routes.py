@@ -1,6 +1,6 @@
 from flask import request, abort, redirect, url_for, render_template, flash
 from app import app, crawler, static
-from app.models import Repo, Report
+from app.models import Repo, Report, Collection
 from datetime import datetime, timedelta
 
 def __to_date(dateString):

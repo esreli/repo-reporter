@@ -8,7 +8,7 @@ class Repo(object):
     @staticmethod
     def all(sorted=True):
         if Repo.__all is None:
-            repos = [Repo(repo["name"], repo["platform"], repo["repo"], repo["crawl"], repo["display"]) for repo in static.repos()["collection-repos"]]
+            repos = [Repo(repo["name"], repo["platform"], repo["repo"], repo["crawl"], repo["display"]) for repo in static.collection()["collection-repos"]]
             if sorted: repos.sort(key=lambda repo: repo.full_name())
             Repo.__all = repos
         return Repo.__all
