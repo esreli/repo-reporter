@@ -21,7 +21,7 @@ def index():
     platform = request.args.get('platform', default="All")
     name = request.args.get('name', default="All")
     # Build Repo models
-    repos = Repo.all()
+    repos = Repo.all_display()
     # Build filters for UI
     platforms = ["All"] + list(set([repo.platform for repo in repos]))
     names = ["All"] + list(set([repo.family_name for repo in repos]))

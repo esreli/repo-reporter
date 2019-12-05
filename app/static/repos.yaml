@@ -1,44 +1,74 @@
 ---
-repos:
+collection-name: Open Source Apps
+collection-accent-color: "#722BA2"
+collection-repos:
 - name: Data Collection
   platform: iOS
   repo: Esri/data-collection-ios
+  crawl: true
+  display: true
 - name: Data Collection
   platform: ".NET"
   repo: Esri/data-collection-dotnet
+  crawl: true
+  display: true
 - name: Maps App
   platform: iOS
   repo: Esri/maps-app-ios
+  crawl: true
+  display: true
 - name: Maps App
   platform: Android
   repo: Esri/maps-app-android
+  crawl: true
+  display: true
 - name: Maps App
   platform: ".NET"
   repo: Esri/maps-app-dotnet
+  crawl: true
+  display: true
 - name: Maps App
   platform: JavaScript
   repo: Esri/maps-app-javascript
+  crawl: true
+  display: true
 - name: Offline Mapbook
   platform: iOS
   repo: Esri/mapbook-ios
+  crawl: true
+  display: true
 - name: Offline Mapbook
   platform: Android
   repo: Esri/mapbook-android
+  crawl: true
+  display: true
 - name: Offline Mapbook
   platform: ".NET"
   repo: Esri/mapbook-wpf
+  crawl: true
+  display: true
 - name: Indoor Routing
   platform: ".NET"
   repo: Esri/indoor-routing-xamarin
+  crawl: true
+  display: true
 - name: Nearby Places
   platform: Android
   repo: Esri/nearby-android
+  crawl: true
+  display: true
 - name: Nearby Places
   platform: JavaScript
   repo: Esri/nearby-javascript
+  crawl: true
+  display: true
 - name: Dynamic Situational Awareness
   platform: Qt
   repo: Esri/dynamic-situational-awareness-qt
+  crawl: true
+  display: true
 - name: Data Collection
   platform: Android
   repo: Esri/data-collection-android
+  crawl: true
+  display: true

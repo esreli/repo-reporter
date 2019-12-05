@@ -10,7 +10,7 @@ def crawl():
     print("[Crawler] starting crawl {0}".format(datetime.now().strftime("%m/%d/%Y, %H:%M:%S")))
 
     # Grab static repos
-    repos = Repo.all()
+    repos = Repo.all_crawler()
 
     try:
         for repo in repos:
