@@ -79,7 +79,7 @@
     {% for insight in report.insights %}
     <tr>
       <th scope="row"><a href="{{insight.repo.slugged_full_name()}}">{{insight.repo.full_name()}} </a></th>
-      <td><a href="{{insight.repo.url()}}">{{insight.repo.repo}}</a></td>
+      <td><a href="{{insight.repo.url()}}" target="blank">{{insight.repo.repo}}</a></td>
       <td>{{insight.view_count}}</td>
       <td>{{insight.view_uniques}}</td>
       <td>{{insight.clone_count}}</td>
