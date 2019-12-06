@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <style>
+  @media (min-width: 1500px) {
+    .container{
+        max-width: 1440px;
+    }
+  }
+  </style>
+</head>
+<body>
+  <div class="container pt-2">
+    <!-- Section: Error Message -->
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <div class="row mb-4">
+      <div class="col-lg-12">
+      <div class="alert alert-danger" role="alert">
+        {% for message in messages %}
+        {{ message }} <br/>
+        {% endfor %}
+      </div>
+    </div>
+    </div>
+    {% endif %}
+    {% endwith %}
+
+    <!-- Section: Header -->
+    <div class="row mb-4">
+      <div class="col-lg-9">
+        <h2>
+          <span>Repo<span style="color:DimGray">rter</span></span>
+          <span style="color:DimGray; font-weight:350">&nbsp;&gt;&nbsp;</span>
+          <span style="color:{{collection_accent}}; font-weight:350">{{collection_name}}</span>
+          <span style="color:LightGray; font-weight:300">&nbsp;&gt;&nbsp;{% block title %}{% endblock %}</span>
+        </h2>
+      </div>
+      <div class="col-sm-3 p-2">
+        <div class="btn-group float-right">
+          <a class="btn btn-outline-primary btn-sm" href="/index">Home</a>
+          <a class="btn btn-outline-secondary btn-sm" href="/crawl">Perform Crawl</a>
+      </div>
+      </div>
+    </div>
+    <div class="row mt-4">
+      <div class="col-sm-3">
+        {% block filters %}
+        {% endblock %}
+      </div>
+      <div class="col-lg-9">
+        {% block content %}
+        {% endblock %}
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -32,3 +32,8 @@ class Report(object):
 
     def end_formatted(self):
         return Report.__to_string(self.end)
+
+    def get_report_title(self):
+        name = self.name if self.name != "All" else "All repos"
+        platform = self.platform if self.platform != "All" else "all platforms"
+        return "{0} {1}".format(name, platform)

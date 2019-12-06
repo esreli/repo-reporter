@@ -6,7 +6,8 @@ class Insight(object):
 
     def __init__(self, repo, start, end):
         self.repo = repo
-        self.paths = []
+        self.start = start
+        self.end = end
 
         match = {'$match': {'repo': self.repo.repo, 'timestamp': {'$gte': start, '$lte': end}}}
 
@@ -40,3 +41,17 @@ class Insight(object):
     def __get_value(values, key):
         try: return values[0][key]
         except (IndexError, KeyError) as e: return None
+
+    @staticmethod
+    def __to_string(date):
+        return "{0}-{1}-{2}".format(format(date.year, "04"), format(date.month, "02"), format(date.day, "02"))
+
+    def date_range(self):
+        formatted = lambda date: "{0}/{1}/{2}".format(date.month, date.day, date.year)
+        return "{0} - {1}".format(formatted(self.start), formatted(self.end))
+
+    def start_formatted(self):
+        return Insight.__to_string(self.start)
+
+    def end_formatted(self):
+        return Insight.__to_string(self.end)

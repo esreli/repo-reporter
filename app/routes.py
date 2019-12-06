@@ -1,6 +1,6 @@
 from flask import request, abort, redirect, url_for, render_template, flash
 from app import app, crawler, static
-from app.models import Repo, Report, Collection
+from app.models import Repo, Report, Collection, Insight
 from datetime import datetime, timedelta
 
 def __to_date(dateString):
@@ -42,8 +42,15 @@ def index():
 
 @app.route('/<app_full_name>')
 def repo_report(app_full_name):
+    # Gather start, end dates
+    end = request.args.get('end', default=__strip_time(datetime.now()), type=__to_date)
+    start = request.args.get('start', default=__strip_time(end-timedelta(days=14)), type=__to_date)
+    # Build Repo model
     repo = Repo.from_slug(app_full_name)
-    return redirect(url_for('index'))
+    # Build Insight model
+    insight = Insight(repo, start, end)
+    # Render page
+    return render_template("insight.html", insight=insight)
 
 @app.route('/crawl')
 def perform_crawl():
