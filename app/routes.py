@@ -2,6 +2,7 @@ from flask import request, abort, redirect, url_for, render_template, flash
 from app import app, crawler, static
 from app.models import Repo, Report, Collection, Insight
 from datetime import datetime, timedelta
+from json import dumps
 
 def __to_date(dateString):
     d = datetime.strptime(dateString, "%Y-%m-%d").date()
@@ -13,7 +14,7 @@ def __strip_time(date):
 
 @app.context_processor
 def inject_collection():
-    return dict(collection_name=Collection.name(), collection_accent=Collection.accent_color())
+    return dict(collection_name=Collection.name(), collection_accent=Collection.accent_color(), dumps=dumps)
 
 @app.route('/')
 @app.route('/index')
