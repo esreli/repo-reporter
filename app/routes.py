@@ -1,15 +1,21 @@
-from flask import request, abort, redirect, url_for, render_template, flash
+from flask import request, abort, request, redirect, url_for, render_template, flash, make_response
 from app import app, crawler, static
 from app.models import Repo, Report, Collection, Insight
 from datetime import datetime, timedelta
 from json import dumps
 
 def __to_date(dateString):
+    if dateString is None: return None
     d = datetime.strptime(dateString, "%Y-%m-%d").date()
     t = datetime.min.time()
     return datetime.combine(d, t)
 
+def __to_string(date):
+    if date is None: return None
+    return "{0}-{1}-{2}".format(date.year, date.month, date.day)
+
 def __strip_time(date):
+    if date is None: return None
     return datetime(date.year, date.month, date.day)
 
 @app.context_processor
@@ -19,9 +25,12 @@ def inject_collection():
 @app.route('/')
 @app.route('/index')
 def index():
+    # Build default start, end dates
+    default_end = __to_date(request.cookies.get('rr-end')) or datetime.now()
+    default_start = __to_date(request.cookies.get('rr-start')) or default_end-timedelta(days=14)
     # Gather start, end dates
-    end = request.args.get('end', default=__strip_time(datetime.now()), type=__to_date)
-    start = request.args.get('start', default=__strip_time(end-timedelta(days=14)), type=__to_date)
+    end = request.args.get('end', default=__strip_time(default_end), type=__to_date)
+    start = request.args.get('start', default=__strip_time(default_start), type=__to_date)
     # Gather filters
     platform = request.args.get('platform', default="All")
     name = request.args.get('name', default="All")
@@ -38,20 +47,39 @@ def index():
         repos = [repo for repo in repos if repo.family_name == name]
     # Generate report
     report = Report(repos, start, end, platform, name)
-    # Render page
-    return render_template("report.html", report=report, platforms=platforms, names=names)
+    # Render from template
+    rendered = render_template("report.html", report=report, platforms=platforms, names=names)
+    # Build response with render
+    resp = make_response(rendered, 200)
+    # Set start and end cookies
+    resp.set_cookie('rr-end', __to_string(end), max_age=60*60*24*365*2)
+    resp.set_cookie('rr-start', __to_string(start), max_age=60*60*24*365*2)
+    return resp
 
 @app.route('/<app_full_name>')
 def repo_report(app_full_name):
+    # Build default start, end dates
+    default_end = __to_date(request.cookies.get('rr-end')) or datetime.now()
+    default_start = __to_date(request.cookies.get('rr-start')) or default_end-timedelta(days=14)
     # Gather start, end dates
-    end = request.args.get('end', default=__strip_time(datetime.now()), type=__to_date)
-    start = request.args.get('start', default=__strip_time(end-timedelta(days=14)), type=__to_date)
+    end = request.args.get('end', default=__strip_time(default_end), type=__to_date)
+    start = request.args.get('start', default=__strip_time(default_start), type=__to_date)
     # Build Repo model
     repo = Repo.from_slug(app_full_name)
+    # Check URL is valid
+    if repo is None:
+        flash('No project matches that URL.')
+        return redirect(url_for('index'))
     # Build Insight model
     insight = Insight(repo, start, end)
     # Render page
-    return render_template("insight.html", insight=insight)
+    rendered = render_template("insight.html", insight=insight)
+    # Build response with render
+    resp = make_response(rendered, 200)
+    # Set start and end cookies
+    resp.set_cookie('rr-end', __to_string(end), max_age=60*60*24*365*2)
+    resp.set_cookie('rr-start', __to_string(start), max_age=60*60*24*365*2)
+    return resp
 
 @app.route('/crawl')
 def perform_crawl():
