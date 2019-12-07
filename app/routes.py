@@ -18,6 +18,24 @@ def __strip_time(date):
     if date is None: return None
     return datetime(date.year, date.month, date.day)
 
+def __build_dates_from_request(request):
+    # Build default start, end dates
+    default_end = __to_date(request.cookies.get('rr-end')) or datetime.now()
+    default_start = __to_date(request.cookies.get('rr-start')) or default_end-timedelta(days=14)
+    # Gather start, end dates
+    end = request.args.get('end', default=__strip_time(default_end), type=__to_date)
+    start = request.args.get('start', default=__strip_time(default_start), type=__to_date)
+    # Return dates
+    return (start, end)
+
+def __build_response_with_dates_cookies(rendered, code, start, end):
+    # Build response with render
+    resp = make_response(rendered, code)
+    # Set start and end cookies
+    resp.set_cookie('rr-end', __to_string(end), max_age=60*60*24*365*2)
+    resp.set_cookie('rr-start', __to_string(start), max_age=60*60*24*365*2)
+    return resp
+
 @app.context_processor
 def inject_collection():
     return dict(collection_name=Collection.name(), collection_accent=Collection.accent_color(), dumps=dumps)
@@ -25,12 +43,8 @@ def inject_collection():
 @app.route('/')
 @app.route('/index')
 def index():
-    # Build default start, end dates
-    default_end = __to_date(request.cookies.get('rr-end')) or datetime.now()
-    default_start = __to_date(request.cookies.get('rr-start')) or default_end-timedelta(days=14)
-    # Gather start, end dates
-    end = request.args.get('end', default=__strip_time(default_end), type=__to_date)
-    start = request.args.get('start', default=__strip_time(default_start), type=__to_date)
+    # Build start and end dates
+    (start, end) = __build_dates_from_request(request)
     # Gather filters
     platform = request.args.get('platform', default="All")
     name = request.args.get('name', default="All")
@@ -49,21 +63,13 @@ def index():
     report = Report(repos, start, end, platform, name)
     # Render from template
     rendered = render_template("report.html", report=report, platforms=platforms, names=names)
-    # Build response with render
-    resp = make_response(rendered, 200)
-    # Set start and end cookies
-    resp.set_cookie('rr-end', __to_string(end), max_age=60*60*24*365*2)
-    resp.set_cookie('rr-start', __to_string(start), max_age=60*60*24*365*2)
-    return resp
+    # Build response
+    return __build_response_with_dates_cookies(rendered, 200, start, end)
 
 @app.route('/<app_full_name>')
 def repo_report(app_full_name):
-    # Build default start, end dates
-    default_end = __to_date(request.cookies.get('rr-end')) or datetime.now()
-    default_start = __to_date(request.cookies.get('rr-start')) or default_end-timedelta(days=14)
-    # Gather start, end dates
-    end = request.args.get('end', default=__strip_time(default_end), type=__to_date)
-    start = request.args.get('start', default=__strip_time(default_start), type=__to_date)
+    # Build start and end dates
+    (start, end) = __build_dates_from_request(request)
     # Build Repo model
     repo = Repo.from_slug(app_full_name)
     # Check URL is valid
@@ -74,12 +80,8 @@ def repo_report(app_full_name):
     insight = Insight(repo, start, end)
     # Render page
     rendered = render_template("insight.html", insight=insight)
-    # Build response with render
-    resp = make_response(rendered, 200)
-    # Set start and end cookies
-    resp.set_cookie('rr-end', __to_string(end), max_age=60*60*24*365*2)
-    resp.set_cookie('rr-start', __to_string(start), max_age=60*60*24*365*2)
-    return resp
+    # Build response
+    return __build_response_with_dates_cookies(rendered, 200, start, end)
 
 @app.route('/crawl')
 def perform_crawl():
