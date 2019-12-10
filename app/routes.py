@@ -20,12 +20,8 @@ def __strip_time(date):
 
 def __build_dates_from_request(request):
     # Build default start, end dates
-    if request.args.get('d', default=False, type=bool):
-        default_end = __to_date(request.cookies.get('rr-end')) or datetime.now()
-        default_start = __to_date(request.cookies.get('rr-start')) or default_end-timedelta(days=14)
-    else:
-        default_end = datetime.now()
-        default_start = default_end-timedelta(days=14)
+    default_end = __to_date(request.cookies.get('rr-end')) or datetime.now()
+    default_start = __to_date(request.cookies.get('rr-start')) or default_end-timedelta(days=14)
     # Gather start, end dates
     end = request.args.get('end', default=__strip_time(default_end), type=__to_date)
     start = request.args.get('start', default=__strip_time(default_start), type=__to_date)
