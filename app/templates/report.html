@@ -12,7 +12,7 @@
       <div class="input-group-prepend">
         <span class="input-group-text" id="inputGroupPrepend">Start</span>
       </div>
-      <input type="date" name="start" value="{{report.start_formatted()}}" class="form-control">
+      <input id="startDate" type="date" name="start" value="{{report.start_formatted()}}" class="form-control">
     </div>
   </div>
   <!-- End Date -->
@@ -21,9 +21,14 @@
       <div class="input-group-prepend">
         <span class="input-group-text" id="inputGroupPrepend">End</span>
       </div>
-      <input type="date" name="end" value="{{report.end_formatted()}}" class="form-control">
+      <input id="endDate" type="date" name="end" value="{{report.end_formatted()}}" class="form-control">
     </div>
   </div>
+
+  <div class="form-row mb-3">
+    <button id="l2w" type="button" class="btn btn-outline-primary">Last two weeks</button>
+  </div>
+
   <!-- Name -->
   <div class="form-row mb-3">
     <div class="input-group">
@@ -63,6 +68,21 @@
     <button type="submit" class="btn btn-primary">Submit</button>
   </div>
 </form>
+
+<script>
+  function setDateRangeLastNDays(n) {
+    var end = new Date();
+    var start = new Date(end - 1000 * 60 * 60 * 24 * n);
+    var endDate = end.getFullYear() + '-' + (end.getMonth() + 1) + '-' + end.getDate();
+    var startDate = start.getFullYear() + '-' + (start.getMonth() + 1) + '-' + start.getDate();
+    $('#endDate').val(endDate);
+    $('#startDate').val(startDate);
+  }
+  $( '#l2w' ).click(function() {
+    setDateRangeLastNDays(14);
+  });
+</script>
+
 {% endblock %}
 
 {% block content %}
