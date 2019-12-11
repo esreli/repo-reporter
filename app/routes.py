@@ -32,8 +32,8 @@ def __build_response_with_dates_cookies(rendered, code, start, end):
     # Build response with render
     resp = make_response(rendered, code)
     # Set start and end cookies
-    resp.set_cookie('rr-end', __to_string(end), max_age=60*60*24*365*2)
-    resp.set_cookie('rr-start', __to_string(start), max_age=60*60*24*365*2)
+    resp.set_cookie('rr-end', __to_string(end), max_age=60*60*12)
+    resp.set_cookie('rr-start', __to_string(start), max_age=60*60*12)
     return resp
 
 @app.context_processor
