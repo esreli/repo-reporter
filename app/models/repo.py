@@ -4,11 +4,13 @@ from slugify import slugify
 class Repo(object):
 
     __all = None
+    __platforms = None
+    __family_names = None
 
     @staticmethod
     def all(sorted=True):
         if Repo.__all is None:
-            repos = [Repo(repo["name"], repo["platform"], repo["repo"], repo["crawl"], repo["display"]) for repo in static.collection()["collection-repos"]]
+            repos = [Repo(**repo) for repo in static.collection()["collection-repos"]]
             if sorted: repos.sort(key=lambda repo: repo.full_name())
             Repo.__all = repos
         return Repo.__all
@@ -26,7 +28,7 @@ class Repo(object):
         try: return next(repo for repo in Repo.all() if app_full_name == repo.slugged_full_name())
         except: return None
 
-    def __init__(self, family_name, platform, repo, crawl, display):
+    def __init__(self, family_name, platform, repo, crawl, display, **kwargs):
         self.family_name = family_name
         self.platform = platform
         self.repo = repo
