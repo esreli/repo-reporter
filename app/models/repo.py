@@ -4,8 +4,6 @@ from slugify import slugify
 class Repo(object):
 
     __all = None
-    __platforms = None
-    __family_names = None
 
     @staticmethod
     def all(sorted=True):
@@ -36,7 +34,7 @@ class Repo(object):
         self.display = display
 
     def __repr__(self):
-        return "Repo({0}, {1})".format(self.repo, self.full_name())
+        return "Repo({0})".format(self.repo)
 
     def full_name(self):
         return "{0} {1}".format(self.family_name, self.platform)
@@ -46,3 +44,16 @@ class Repo(object):
 
     def slugged_full_name(self):
         return slugify(self.full_name())
+
+class Group(object):
+
+    @staticmethod
+    def group_repos(repos, attribute):
+        grouped = {}
+        for repo in repos:
+            value = getattr(repo, attribute)
+            if value in grouped:
+                grouped[value] += [repo]
+            else:
+                grouped[value] = [repo]
+        return grouped

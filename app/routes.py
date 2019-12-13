@@ -1,6 +1,6 @@
 from flask import request, abort, request, redirect, url_for, render_template, flash, make_response
 from app import app, crawler, static
-from app.models import Repo, Report, Collection, Insight
+from app.models import Repo, Report, Collection, Insight, Group
 from datetime import datetime, timedelta
 from json import dumps
 
@@ -50,6 +50,8 @@ def index():
     name = request.args.get('name', default="All")
     # Build Repo models
     repos = Repo.all_display()
+    grouped = Group.group_repos(repos, "platform")
+    print(grouped)
     # Build filters for UI
     platforms = ["All"] + list(set([repo.platform for repo in repos]))
     names = ["All"] + list(set([repo.family_name for repo in repos]))
