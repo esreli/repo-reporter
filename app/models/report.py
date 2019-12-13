@@ -2,17 +2,15 @@ from .insight import Insight
 
 class Report(object):
 
-    def __init__(self, repos, start, end, platform, name):
-        self.insights = []
+    def __init__(self, groups, start, end, title):
+        self.groups = groups
         self.start = start
         self.end = end
-        self.platform = platform
-        self.name = name
-        self.insights  = [Insight(repo, self.start, self.end) for repo in repos]
-        self.view_count_sum = sum(insight.view_count for insight in self.insights)
-        self.view_uniques_sum = sum(insight.view_uniques for insight in self.insights)
-        self.clone_count_sum = sum(insight.clone_count for insight in self.insights)
-        self.clone_uniques_sum = sum(insight.clone_uniques for insight in self.insights)
+        self.title = platform
+        self.view_count_sum = sum(group.view_count for group in self.groups)
+        self.view_uniques_sum = sum(group.view_uniques for group in self.groups)
+        self.clone_count_sum = sum(group.clone_count for group in self.groups)
+        self.clone_uniques_sum = sum(group.clone_uniques for group in self.groups)
         # TODO: Consider Build Referrers for full report
         # https://docs.mongodb.com/manual/reference/operator/query/or/
 
@@ -34,6 +32,4 @@ class Report(object):
         return Report.__to_string(self.end)
 
     def get_report_title(self):
-        name = self.name if self.name != "All" else "All repos"
-        platform = self.platform if self.platform != "All" else "all platforms"
-        return "{0} {1}".format(name, platform)
+        return self.title

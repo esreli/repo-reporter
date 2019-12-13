@@ -14,6 +14,10 @@ def __to_string(date):
     if date is None: return None
     return "{0}-{1}-{2}".format(date.year, date.month, date.day)
 
+def __to_attribute_filter(parameter):
+    if parameter not in Repo.filterable_attributes(): return None # This includes default "All"
+    else: return parameter
+
 def __strip_time(date):
     if date is None: return None
     return datetime(date.year, date.month, date.day)
@@ -46,25 +50,16 @@ def index():
     # Build start and end dates
     (start, end) = __build_dates_from_request(request)
     # Gather filters
-    platform = request.args.get('platform', default="All")
-    name = request.args.get('name', default="All")
+    attribute = request.args.get('group', default="All", type=__to_attribute_filter)
     # Build Repo models
     repos = Repo.all_display()
-    grouped = Group.group_repos(repos, "platform")
+    
+    grouped = Group.group_repos(repos, attribute)
     print(grouped)
-    # Build filters for UI
-    platforms = ["All"] + list(set([repo.platform for repo in repos]))
-    names = ["All"] + list(set([repo.family_name for repo in repos]))
-    # Filter Repos by platform
-    if platform != "All":
-        repos = [repo for repo in repos if repo.platform == platform]
-    # Filter Repos by name
-    if name != "All":
-        repos = [repo for repo in repos if repo.family_name == name]
     # Generate report
-    report = Report(repos, start, end, platform, name)
+    report = Report(repos, start, end, title="")
     # Render from template
-    rendered = render_template("report.html", report=report, platforms=platforms, names=names)
+    rendered = render_template("report.html", report=report)
     # Build response
     return __build_response_with_dates_cookies(rendered, 200, start, end)
 

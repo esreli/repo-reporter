@@ -6,6 +6,10 @@ class Repo(object):
     __all = None
 
     @staticmethod
+    def filterable_attributes():
+        return ["family_name", "platform"]
+
+    @staticmethod
     def all(sorted=True):
         if Repo.__all is None:
             repos = [Repo(**repo) for repo in static.collection()["collection-repos"]]
@@ -57,3 +61,14 @@ class Group(object):
             else:
                 grouped[value] = [repo]
         return grouped
+
+    def __init__(self, repos, start, end, title):
+        self.insights = []
+        self.start = start
+        self.end = end
+        self.title = title
+        self.insights  = [Insight(repo, self.start, self.end) for repo in repos]
+        self.view_count_sum = sum(insight.view_count for insight in self.insights)
+        self.view_uniques_sum = sum(insight.view_uniques for insight in self.insights)
+        self.clone_count_sum = sum(insight.clone_count for insight in self.insights)
+        self.clone_uniques_sum = sum(insight.clone_uniques for insight in self.insights)
