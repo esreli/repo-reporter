@@ -70,13 +70,17 @@
 </form>
 
 <script>
+  function formatNDigits(number, n) {
+    return ("0" + number).slice(-n);
+  }
+  function dateString(date) {
+    return formatNDigits(date.getFullYear(), 4) + '-' + formatNDigits((date.getMonth() + 1), 2) + '-' + formatNDigits(date.getDate(), 2);
+  }
   function setDateRangeLastNDays(n) {
     var end = new Date();
     var start = new Date(end - 1000 * 60 * 60 * 24 * n);
-    var endDate = end.getFullYear() + '-' + (end.getMonth() + 1) + '-' + end.getDate();
-    var startDate = start.getFullYear() + '-' + (start.getMonth() + 1) + '-' + start.getDate();
-    $('#endDate').val(endDate);
-    $('#startDate').val(startDate);
+    $('#endDate').val(dateString(end));
+    $('#startDate').val(dateString(start));
   }
   $( '#l2w' ).click(function() {
     setDateRangeLastNDays(14);
