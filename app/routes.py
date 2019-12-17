@@ -1,6 +1,6 @@
 from flask import request, abort, request, redirect, url_for, render_template, flash, make_response
 from app import app, crawler, static
-from app.models import Repo, Report, Collection, Insight
+from app.models import Repo, Report, Collection, Insight, Group, Filter
 from datetime import datetime, timedelta
 from json import dumps
 
@@ -13,6 +13,10 @@ def __to_date(dateString):
 def __to_string(date):
     if date is None: return None
     return "{0}-{1}-{2}".format(date.year, date.month, date.day)
+
+def __to_attribute_filter(parameter):
+    if not any(filter.attribute == parameter for filter in Repo.filterable_attributes()): return Filter.no_filter() # This includes default "All"
+    else: return next(filter for filter in Repo.filterable_attributes() if filter.attribute == parameter)
 
 def __strip_time(date):
     if date is None: return None
@@ -46,23 +50,17 @@ def index():
     # Build start and end dates
     (start, end) = __build_dates_from_request(request)
     # Gather filters
-    platform = request.args.get('platform', default="All")
-    name = request.args.get('name', default="All")
+    filter = request.args.get('group', default=Filter.no_filter(), type=__to_attribute_filter)
     # Build Repo models
     repos = Repo.all_display()
-    # Build filters for UI
-    platforms = ["All"] + list(set([repo.platform for repo in repos]))
-    names = ["All"] + list(set([repo.family_name for repo in repos]))
-    # Filter Repos by platform
-    if platform != "All":
-        repos = [repo for repo in repos if repo.platform == platform]
-    # Filter Repos by name
-    if name != "All":
-        repos = [repo for repo in repos if repo.family_name == name]
+    # Group Repos by filter
+    groups = Group.group_repos(repos, filter, start, end)
     # Generate report
-    report = Report(repos, start, end, platform, name)
+    report = Report(groups, filter, start, end)
+    # Build filters
+    filters = [Filter.no_filter()] + Repo.filterable_attributes()
     # Render from template
-    rendered = render_template("report.html", report=report, platforms=platforms, names=names)
+    rendered = render_template("report.html", report=report, filters=filters)
     # Build response
     return __build_response_with_dates_cookies(rendered, 200, start, end)
 

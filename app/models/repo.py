@@ -1,11 +1,14 @@
 from app import static
 from slugify import slugify
+from .filter import Filter
 
 class Repo(object):
 
     __all = None
-    __platforms = None
-    __family_names = None
+
+    @staticmethod
+    def filterable_attributes():
+        return [Filter("family_name", "Family", "Filtered by family"), Filter("platform", "Platform", "Filtered by platform")]
 
     @staticmethod
     def all(sorted=True):
@@ -36,7 +39,7 @@ class Repo(object):
         self.display = display
 
     def __repr__(self):
-        return "Repo({0}, {1})".format(self.repo, self.full_name())
+        return "Repo({0})".format(self.repo)
 
     def full_name(self):
         return "{0} {1}".format(self.family_name, self.platform)
