@@ -57,7 +57,6 @@ def index():
     groups = Group.group_repos(repos, filter, start, end)
     # Generate report
     report = Report(groups, filter, start, end)
-    print(report.get_title())
     # Build filters
     filters = [Filter("All", "All")] + Repo.filterable_attributes()
     # Render from template
