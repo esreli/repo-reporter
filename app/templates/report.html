@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block title %}
-{{report.title}}
+{{ "{0} > {1}".format(report.filter.display, report.date_range()) }}
 {% endblock %}
 
 {% block filters %}
@@ -37,7 +37,7 @@
       </div>
       <select class="custom-select" name="group">
         {% for filter in filters %}
-        {% if filter.attribute == report.filter %}
+        {% if filter.attribute == report.filter.attribute %}
         <option selected name="name" value="{{filter.attribute}}">{{filter.display}}</option>
         {% else %}
         <option name="name" value="{{filter.attribute}}">{{filter.display}}</option>
@@ -73,7 +73,7 @@
 {% for group in report.groups %}
 <table class="table table-striped table-light table-hover sortable">
   <thead class="thead-light">
-    <th scope="col">{{report.date_range()}}</th>
+    <th scope="col">{{group.title}}</th>
     <th scope="col">Repo</th>
     <th scope="col">Views</th>
     <th scope="col">Views (unique)</th>

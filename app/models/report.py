@@ -2,12 +2,11 @@ from .insight import Insight
 
 class Report(object):
 
-    def __init__(self, groups, filter, start, end, title):
+    def __init__(self, groups, filter, start, end):
         self.groups = groups
         self.filter = filter
         self.start = start
         self.end = end
-        self.title = title
         self.view_count_sum = sum(group.view_count_sum for group in self.groups)
         self.view_uniques_sum = sum(group.view_uniques_sum for group in self.groups)
         self.clone_count_sum = sum(group.clone_count_sum for group in self.groups)

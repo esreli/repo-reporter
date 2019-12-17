@@ -65,14 +65,13 @@ class Group(object):
         # 1. Divide by attribte
         grouped = {}
         for repo in repos:
-            print(type(repo), type(filter))
             value = getattr(repo, filter.attribute)
             if value in grouped:
                 grouped[value] += [repo]
             else:
                 grouped[value] = [repo]
         # 2. Build groups
-        return [Group(v, filter.display, start, end) for (k, v) in grouped.items()]
+        return [Group(v, k, start, end) for (k, v) in grouped.items()]
 
     def __init__(self, repos, title, start, end):
         self.insights = []
