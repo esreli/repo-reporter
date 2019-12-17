@@ -1,6 +1,6 @@
 from flask import request, abort, request, redirect, url_for, render_template, flash, make_response
 from app import app, crawler, static
-from app.models import Repo, Report, Collection, Insight, Group
+from app.models import Repo, Report, Collection, Insight, Group, Filter
 from datetime import datetime, timedelta
 from json import dumps
 
@@ -15,8 +15,8 @@ def __to_string(date):
     return "{0}-{1}-{2}".format(date.year, date.month, date.day)
 
 def __to_attribute_filter(parameter):
-    if parameter not in Repo.filterable_attributes(): return None # This includes default "All"
-    else: return parameter
+    if not any(filter.attribute == parameter for filter in Repo.filterable_attributes()): return Filter(None, "All") # This includes default "All"
+    else: return next(filter for filter in Repo.filterable_attributes() if filter.attribute == parameter)
 
 def __strip_time(date):
     if date is None: return None
@@ -50,16 +50,18 @@ def index():
     # Build start and end dates
     (start, end) = __build_dates_from_request(request)
     # Gather filters
-    attribute = request.args.get('group', default="All", type=__to_attribute_filter)
+    filter = request.args.get('group', default=Filter(None, "All"), type=__to_attribute_filter)
     # Build Repo models
     repos = Repo.all_display()
-    
-    grouped = Group.group_repos(repos, attribute)
-    print(grouped)
+    # Group Repos by filter
+    groups = Group.group_repos(repos, filter, start, end)
+    print(groups)
     # Generate report
-    report = Report(repos, start, end, title="")
+    report = Report(groups, filter, start, end, title="")
+    # Build filters
+    filters = [Filter("All", "All")] + Repo.filterable_attributes()
     # Render from template
-    rendered = render_template("report.html", report=report)
+    rendered = render_template("report.html", report=report, filters=filters)
     # Build response
     return __build_response_with_dates_cookies(rendered, 200, start, end)
 
