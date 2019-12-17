@@ -15,7 +15,7 @@ def __to_string(date):
     return "{0}-{1}-{2}".format(date.year, date.month, date.day)
 
 def __to_attribute_filter(parameter):
-    if not any(filter.attribute == parameter for filter in Repo.filterable_attributes()): return Filter(None, "All") # This includes default "All"
+    if not any(filter.attribute == parameter for filter in Repo.filterable_attributes()): return Filter.no_filter() # This includes default "All"
     else: return next(filter for filter in Repo.filterable_attributes() if filter.attribute == parameter)
 
 def __strip_time(date):
@@ -50,7 +50,7 @@ def index():
     # Build start and end dates
     (start, end) = __build_dates_from_request(request)
     # Gather filters
-    filter = request.args.get('group', default=Filter(None, "All"), type=__to_attribute_filter)
+    filter = request.args.get('group', default=Filter.no_filter(), type=__to_attribute_filter)
     # Build Repo models
     repos = Repo.all_display()
     # Group Repos by filter
@@ -58,7 +58,7 @@ def index():
     # Generate report
     report = Report(groups, filter, start, end)
     # Build filters
-    filters = [Filter("All", "All")] + Repo.filterable_attributes()
+    filters = [Filter.no_filter()] + Repo.filterable_attributes()
     # Render from template
     rendered = render_template("report.html", report=report, filters=filters)
     # Build response
