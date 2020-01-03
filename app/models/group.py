@@ -1,4 +1,8 @@
+from app import db
 from .insight import Insight
+from datetime import datetime, timedelta
+from json import dumps
+from slugify import slugify
 
 class Group(object):
 
@@ -28,5 +32,32 @@ class Group(object):
         self.clone_count_sum = sum(insight.clone_count for insight in self.insights)
         self.clone_uniques_sum = sum(insight.clone_uniques for insight in self.insights)
 
+        dates = [ start + timedelta(days=d) for d in range((end - start).days + 1)]
+        # Views and uniques
+        self.views = []
+        self.uniques = []
+        # Iterate
+        for date in dates:
+            fDate = "{0}-{1}-{2}".format(date.month, date.day, date.year)
+            match = {'$match': {'$or':  [{'repo': repo.repo, 'timestamp': {'$gte': date, '$lte': date}} for repo in repos]}}
+            agr = [match, {'$group': {'_id': 1, 'count': {'$sum': '$count'}, 'uniques': {'$sum': '$uniques'}}}]
+            record = list(db.view.aggregate(agr))
+            self.views.append((fDate, Group.__get_value(record, 'count')/len(self.insights)))
+            self.uniques.append((fDate, Group.__get_value(record, 'uniques')/len(self.insights)))
+
+    def id(self):
+        return slugify(self.title).replace("-", "_")
+
+    def dump_dates(self, attribute):
+        return dumps([value[0] for value in getattr(self, attribute)])
+
+    def dump_values(self, attribute):
+        return dumps([value[1] for value in getattr(self, attribute)])
+
     def __repr__(self):
         return "Group({0} - ({1}) repos)".format(self.title, len(self.insights))
+
+    @staticmethod
+    def __get_value(values, key):
+        try: return values[0][key]
+        except (IndexError, KeyError) as e: return 0

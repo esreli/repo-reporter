@@ -74,8 +74,30 @@
 {% endblock %}
 
 {% block content %}
+
+<!-- Plot -->
+<div id='groupInsightsPlot'></div>
+
+<script>
+  {% for group in report.groups %}
+  var {{ group.id() }} = {
+    x: {{group.dump_dates('views')|safe}},
+    y: {{group.dump_values('views')|safe}},
+    type: 'scatter',
+    name: '{{group.title()}}',
+    line: {shape: 'spline'}
+  };
+  {% endfor %}
+  var data = {{report.dump_groups_ids()|safe}};
+  var layout = {
+    title: 'Repo Views'
+  };
+  Plotly.newPlot('groupInsightsPlot', data, layout, {responsive: true});
+</script>
+
+<!-- Tables -->
 {% for group in report.groups %}
-<h3>{{ group.title }}</h3>
+<h4>{{ group.title }}</h4>
 <table class="table table-striped table-light table-hover sortable">
   <thead class="thead-light">
     <th scope="col">Repo</th>
