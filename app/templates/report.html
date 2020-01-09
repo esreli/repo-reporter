@@ -84,7 +84,7 @@
     x: {{group.dump_dates('views')|safe}},
     y: {{group.dump_values('views')|safe}},
     type: 'scatter',
-    name: '{{group.title()}}',
+    name: '{{group.title}}',
     line: {shape: 'spline'}
   };
   {% endfor %}
