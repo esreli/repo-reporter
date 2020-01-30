@@ -42,8 +42,8 @@ class Group(object):
             match = {'$match': {'$or':  [{'repo': repo.repo, 'timestamp': {'$gte': date, '$lte': date}} for repo in repos]}}
             agr = [match, {'$group': {'_id': 1, 'count': {'$sum': '$count'}, 'uniques': {'$sum': '$uniques'}}}]
             record = list(db.view.aggregate(agr))
-            self.views.append((fDate, Group.__get_value(record, 'count')/len(self.insights)))
-            self.uniques.append((fDate, Group.__get_value(record, 'uniques')/len(self.insights)))
+            self.views.append((fDate, Group.__get_value(record, 'count')))
+            self.uniques.append((fDate, Group.__get_value(record, 'uniques')))
 
     def id(self):
         return slugify(self.title).replace("-", "_")
