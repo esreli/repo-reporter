@@ -86,6 +86,13 @@ Install dependencies to the `repo-reporter-venv` virtual environment lib.
 
 `$(repo-reporter-venv) pip install -r ./requirements.txt`
 
+### Specify Environment
+
+Repo reporter is designed two run in one of two environments.
+
+`$(repo-reporter-venv) export FLASK_ENV=production`
+`$(repo-reporter-venv) export FLASK_ENV=development`
+
 ### Start Flask Server
 
 Start the flask server on the default port, `5000`.
