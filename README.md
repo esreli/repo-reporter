@@ -90,8 +90,10 @@ Install dependencies to the `repo-reporter-venv` virtual environment lib.
 
 Repo reporter is designed two run in one of two environments.
 
-`$(repo-reporter-venv) export FLASK_ENV=production`
-`$(repo-reporter-venv) export FLASK_ENV=development`
+```sh
+$(repo-reporter-venv) export FLASK_ENV=production
+$(repo-reporter-venv) export FLASK_ENV=development
+```
 
 ### Start Flask Server
 
