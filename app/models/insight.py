@@ -1,6 +1,9 @@
+from datetime import datetime, timedelta
 from app import db
 from .referrer import Referrer
 from .path import Path
+from json import dumps
+
 
 class Insight(object):
 
@@ -34,8 +37,26 @@ class Insight(object):
         paths = list(db.path.aggregate(agr))
         self.paths = [ Path(path["_id"], path["title"], path["count"], path["uniques"]) for path in paths]
 
+        # Date Range
+        dates = [ start + timedelta(days=d) for d in range((end - start).days + 1)]
+
+        # Views and uniques
+        self.views = []
+        self.uniques = []
+
+        for date in dates:
+            fDate = "{0}-{1}-{2}".format(date.month, date.day, date.year)
+            record = db.view.find_one({'repo': self.repo.repo, 'timestamp': {'$gte': date, '$lte': date}})
+            if record is None:
+                self.views.append((fDate, 0))
+                self.uniques.append((fDate, 0))
+            else:
+                self.views.append((fDate, record["count"]))
+                self.uniques.append((fDate, record["uniques"]))
+
+
     def __repr__(self):
-        return 'Insight({0}- v: {1}, vu: {2}, c: {3}, cu: {4})'.format(self.repo.repo, self.view_count, self.view_uniques, self.clone_count, self.clone_uniques)
+        return 'Insight({0})'.format(self.repo.repo)
 
     @staticmethod
     def __get_value(values, key):

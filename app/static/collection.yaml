@@ -72,3 +72,8 @@ collection-repos:
   repo: Esri/data-collection-android
   crawl: true
   display: true
+- family_name: Samples
+  platform: Qt
+  repo: Esri/arcgis-runtime-samples-qt
+  crawl: true
+  display: false

@@ -1,4 +1,5 @@
 from .insight import Insight
+from json import dumps
 
 class Report(object):
 
@@ -30,3 +31,6 @@ class Report(object):
 
     def end_formatted(self):
         return Report.__to_string(self.end)
+
+    def dump_groups_ids(self):
+        return dumps([group.id() for group in self.groups]).replace('"', '')
