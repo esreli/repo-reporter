@@ -14,5 +14,5 @@ ENV GITHUB_PERSONAL_ACCESS_TOKEN ""
 
 RUN chown -R appuser:appuser ./
 USER appuser
-EXPOSE 5000
+EXPOSE 5002
 ENTRYPOINT [ "./app.sh" ]
