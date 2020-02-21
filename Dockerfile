@@ -9,8 +9,8 @@ COPY app app
 COPY app.sh app.sh
 RUN pip install -r requirements.txt
 
-ENV FLASK_ENV development
 ENV GITHUB_PERSONAL_ACCESS_TOKEN ""
+ENV FLASK_ENV development
 
 RUN chown -R appuser:appuser ./
 USER appuser
