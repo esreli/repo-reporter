@@ -14,4 +14,4 @@ fi
 echo GITHUB_PERSONAL_ACCESS_TOKEN=$GITHUB_PERSONAL_ACCESS_TOKEN >> .env
 echo "RR_SECRET_KEY=$(openssl rand -base64 32)" >> .env
 
-flask run -h 0.0.0.0 -p 5000
+flask run -h 0.0.0.0 -p 5002
