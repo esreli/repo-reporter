@@ -14,7 +14,10 @@ pipeline {
             steps {
               echo "Going to build docker image ${iamgeName}"
               script {
-                 docker.build("${imageName}:${env.BUILD_ID}")
+                 img = docker.build("${imageName}:${env.BUILD_ID}")
+                 img.push()
+
+                 img.push('latest')
               }
             }
         }
