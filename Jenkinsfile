@@ -12,7 +12,7 @@ pipeline {
     stages {
         stage('build') {
             steps {
-              echo "Going to build docker image ${iamgeName}"
+              echo "Going to build docker image ${imageName}"
               script {
                  img = docker.build("${imageName}:${env.BUILD_ID}")
                  img.push()
