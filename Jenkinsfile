@@ -15,10 +15,9 @@ pipeline {
               echo "Going to build docker image ${imageName}"
               script {
                  img = docker.build("${imageName}:${env.BUILD_ID}")
-                 img.push()
-
-                 img.push('latest')
               }
+
+              sh "docker image tag ${imageName}:${env.BUILD_ID} ${imageName}:latest"
             }
         }
     }
