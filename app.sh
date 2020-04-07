@@ -11,6 +11,19 @@ then
 	exit 1
 fi
 
+if [ -z $MONGO_HOST ]
+then
+	echo "We need a MONGO_HOST defined!"
+	exit 1
+fi
+
+if [ -z $MONGO_PORT ]
+then
+	echo "We need a MONGO_PORT defined!"
+	exit 1
+fi
+
+
 echo GITHUB_PERSONAL_ACCESS_TOKEN=$GITHUB_PERSONAL_ACCESS_TOKEN >> .env
 echo "RR_SECRET_KEY=$(openssl rand -base64 32)" >> .env
 

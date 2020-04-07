@@ -9,7 +9,9 @@ COPY app app
 COPY app.sh app.sh
 RUN pip install -r requirements.txt
 
-ENV GITHUB_PERSONAL_ACCESS_TOKEN ""
+ENV GITHUB_PERSONAL_ACCESS_TOKEN dummy_value
+ENV MONGO_HOST localhost
+ENV MONGO_PORT 27017
 ENV FLASK_ENV production
 
 RUN chown -R appuser:appuser ./

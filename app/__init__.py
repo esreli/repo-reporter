@@ -25,6 +25,8 @@ if m_host is None:
 m_port = os.getenv('MONGO_PORT')
 if m_port is None:
     m_port = 27017
+else:
+    m_port = int(m_port)
 
 # Get Github Access Token from Environment
 pat = app.config['GITHUB_PERSONAL_ACCESS_TOKEN']
