@@ -1,79 +1,9 @@
 ---
-collection-name: Open Source Apps
+collection-name: Afd Repos
 collection-accent-color: "#722BA2"
 collection-repos:
-- family_name: Data Collection
-  platform: iOS
-  repo: Esri/data-collection-ios
+- family_name: Arcgis For Developers Devops
+  platform: web
+  repo: ArcGIS/arcgis-for-developers-devops
   crawl: true
   display: true
-- family_name: Data Collection
-  platform: ".NET"
-  repo: Esri/data-collection-dotnet
-  crawl: true
-  display: true
-- family_name: Maps App
-  platform: iOS
-  repo: Esri/maps-app-ios
-  crawl: true
-  display: true
-- family_name: Maps App
-  platform: Android
-  repo: Esri/maps-app-android
-  crawl: true
-  display: true
-- family_name: Maps App
-  platform: ".NET"
-  repo: Esri/maps-app-dotnet
-  crawl: true
-  display: true
-- family_name: Maps App
-  platform: JavaScript
-  repo: Esri/maps-app-javascript
-  crawl: true
-  display: true
-- family_name: Offline Mapbook
-  platform: iOS
-  repo: Esri/mapbook-ios
-  crawl: true
-  display: true
-- family_name: Offline Mapbook
-  platform: Android
-  repo: Esri/mapbook-android
-  crawl: true
-  display: true
-- family_name: Offline Mapbook
-  platform: ".NET"
-  repo: Esri/mapbook-wpf
-  crawl: true
-  display: true
-- family_name: Indoor Routing
-  platform: ".NET"
-  repo: Esri/indoor-routing-xamarin
-  crawl: true
-  display: true
-- family_name: Nearby Places
-  platform: Android
-  repo: Esri/nearby-android
-  crawl: true
-  display: true
-- family_name: Nearby Places
-  platform: JavaScript
-  repo: Esri/nearby-javascript
-  crawl: true
-  display: true
-- family_name: Dynamic Situational Awareness
-  platform: Qt
-  repo: Esri/dynamic-situational-awareness-qt
-  crawl: true
-  display: true
-- family_name: Data Collection
-  platform: Android
-  repo: Esri/data-collection-android
-  crawl: true
-  display: true
-- family_name: Samples
-  platform: Qt
-  repo: Esri/arcgis-runtime-samples-qt
-  crawl: true
-  display: false
