@@ -35,16 +35,25 @@ class Group(object):
         dates = [ start + timedelta(days=d) for d in range((end - start).days + 1)]
         # Views and uniques
         self.views = []
-        self.uniques = []
+        self.views_unique = []
+        self.clones = []
+        self.clones_unique = []
         # Iterate
         for date in dates:
+            # Views
             fDate = "{0}-{1}-{2}".format(date.month, date.day, date.year)
             match = {'$match': {'$or':  [{'repo': repo.repo, 'timestamp': {'$gte': date, '$lte': date}} for repo in repos]}}
             agr = [match, {'$group': {'_id': 1, 'count': {'$sum': '$count'}, 'uniques': {'$sum': '$uniques'}}}]
             record = list(db.view.aggregate(agr))
             self.views.append((fDate, Group.__get_value(record, 'count')))
-            self.uniques.append((fDate, Group.__get_value(record, 'uniques')))
-
+            self.views_unique.append((fDate, Group.__get_value(record, 'uniques')))
+            # Clones
+            match = {'$match': {'$or':  [{'repo': repo.repo, 'timestamp': {'$gte': date, '$lte': date}} for repo in repos]}}
+            agr = [match, {'$group': {'_id': 1, 'count': {'$sum': '$count'}, 'uniques': {'$sum': '$uniques'}}}]
+            record = list(db.clone.aggregate(agr))
+            self.clones.append((fDate, Group.__get_value(record, 'count')))
+            self.clones_unique.append((fDate, Group.__get_value(record, 'uniques')))
+            
     def id(self):
         return slugify(self.title).replace("-", "_")
 

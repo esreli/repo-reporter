@@ -76,4 +76,29 @@ collection-repos:
   platform: Qt
   repo: Esri/arcgis-runtime-samples-qt
   crawl: true
-  display: false
+  display: true
+- family_name: Samples
+  platform: iOS
+  repo: Esri/arcgis-runtime-samples-ios
+  crawl: true
+  display: true
+- family_name: Toolkit
+  platform: iOS
+  repo: Esri/arcgis-runtime-toolkit-ios
+  crawl: true
+  display: true
+- family_name: Samples
+  platform: ".NET"
+  repo: Esri/arcgis-runtime-samples-dotnet
+  crawl: true
+  display: true
+- family_name: Toolkit
+  platform: ".NET"
+  repo: Esri/arcgis-toolkit-dotnet
+  crawl: true
+  display: true
+- family_name: Demos
+  platform: ".NET"
+  repo: Esri/arcgis-runtime-demos-dotnet
+  crawl: true
+  display: true
