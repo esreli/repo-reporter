@@ -77,6 +77,11 @@ collection-repos:
   repo: Esri/arcgis-runtime-samples-qt
   crawl: true
   display: true
+- family_name: Toolkit
+  platform: Qt
+  repo: Esri/arcgis-runtime-toolkit-qt
+  crawl: true
+  display: true
 - family_name: Samples
   platform: iOS
   repo: Esri/arcgis-runtime-samples-ios
