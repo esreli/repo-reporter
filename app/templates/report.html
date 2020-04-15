@@ -81,8 +81,8 @@
 <script>
   {% for group in report.groups %}
   var {{ group.id() }} = {
-    x: {{group.dump_dates('views')|safe}},
-    y: {{group.dump_values('views')|safe}},
+    x: {{group.dump_dates('clones_unique')|safe}},
+    y: {{group.dump_values('clones_unique')|safe}},
     type: 'scatter',
     name: '{{group.title}}',
     line: {shape: 'spline'}
@@ -90,7 +90,7 @@
   {% endfor %}
   var data = {{report.dump_groups_ids()|safe}};
   var layout = {
-    title: 'Repo Views'
+    title: 'Repo Clones Unique'
   };
   Plotly.newPlot('groupInsightsPlot', data, layout, {responsive: true});
 </script>
