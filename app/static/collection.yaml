@@ -117,3 +117,8 @@ collection-repos:
   repo: Esri/arcgis-runtime-samples-java
   crawl: true
   display: true
+- family_name: Toolkit
+  platform: Java
+  repo: Esri/arcgis-runtime-toolkit-java
+  crawl: true
+  display: true
