@@ -107,3 +107,13 @@ collection-repos:
   repo: Esri/arcgis-runtime-demos-dotnet
   crawl: true
   display: true
+- family_name: Samples
+  platform: Android
+  repo: Esri/arcgis-runtime-samples-android
+  crawl: true
+  display: true
+- family_name: Samples
+  platform: Java
+  repo: Esri/arcgis-runtime-samples-java
+  crawl: true
+  display: true
